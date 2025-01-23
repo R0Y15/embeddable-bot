@@ -36,14 +36,12 @@ To embed the chatbot in your website, add the following iframe to your HTML:
 
 ```html
 <iframe 
-  src="YOUR_DOMAIN/widget"
+  src="https://embeddable-bot.vercel.app/widget"
   width="100%"
   height="600px"
   frameBorder="0"
 />
 ```
-
-Replace `YOUR_DOMAIN` with your deployed application's domain.
 
 ## Using the Chat Widget
 

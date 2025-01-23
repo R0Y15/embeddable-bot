@@ -19,7 +19,7 @@ export default function Home() {
           </p>
           <pre className="bg-background p-4 rounded-md overflow-x-auto">
             <code>{`<iframe 
-  src="YOUR_DOMAIN/widget"
+  src="https://embeddable-bot.vercel.app/widget"
   width="100%"
   height="600px"
   frameBorder="0"
