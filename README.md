@@ -2,6 +2,10 @@
 
 A modern, embeddable AI chatbot powered by Google's Gemini model, built with Next.js, shadcn/ui, and Convex.
 
+<div align="center">
+  <img src="public/home-page.png" alt="AI Chatbot Demo" width="100%"/>
+</div>
+
 ## Features
 
 - 🤖 Powered by Google's Gemini AI model
