@@ -82,12 +82,12 @@ export function Chatbot({ className }: { className?: string }) {
     }, []);
 
     return (
-        <Card className={cn("w-full max-w-2xl mx-auto h-[600px] flex flex-col rounded-t-none", className)}>
-            <div className="p-4 border-b">
-                <h2 className="font-semibold">AI Chat Assistant</h2>
+        <Card className={cn("w-full max-w-2xl mx-auto h-[600px] flex flex-col rounded-t-none bg-background", className)}>
+            <div className="p-4 border-b bg-background">
+                <h2 className="font-semibold text-foreground">AI Chat Assistant</h2>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background">
                 {messages.map((message, index) => (
                     <div
                         key={index}
@@ -95,7 +95,7 @@ export function Chatbot({ className }: { className?: string }) {
                             "flex flex-col rounded-lg px-3 py-1.5 text-sm",
                             message.role === "user"
                                 ? "bg-primary text-primary-foreground ml-auto w-fit max-w-[80%]"
-                                : "bg-muted prose prose-sm max-w-[80%] prose-p:my-0 prose-ul:my-0 prose-ul:pl-4"
+                                : "bg-muted dark:bg-secondary/80 text-foreground dark:text-foreground prose prose-sm max-w-[80%] prose-p:my-0 prose-ul:my-0 prose-ul:pl-4 dark:prose-invert"
                         )}
                     >
                         {message.role === "user" ? (
@@ -107,7 +107,7 @@ export function Chatbot({ className }: { className?: string }) {
                 ))}
                 {isLoading && (
                     <div className="flex items-center space-x-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <Loader2 className="h-4 w-4 animate-spin text-foreground" />
                         <p className="text-sm text-muted-foreground">AI is thinking...</p>
                     </div>
                 )}
@@ -116,7 +116,7 @@ export function Chatbot({ className }: { className?: string }) {
 
             {/* File Tab */}
             {currentFileName && (
-                <div className="mx-4 mb-2 px-3 py-1.5 bg-muted rounded-md flex items-center justify-between">
+                <div className="mx-4 mb-2 px-3 py-1.5 bg-muted dark:bg-secondary/80 rounded-md flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">{currentFileName}</span>
                     <Button
                         variant="ghost"
@@ -135,7 +135,7 @@ export function Chatbot({ className }: { className?: string }) {
                 </div>
             )}
 
-            <form onSubmit={handleSubmit} className="p-4 flex gap-2 items-center justify-center">
+            <form onSubmit={handleSubmit} className="p-4 flex gap-2 items-center justify-center bg-background border-t">
                 <Button
                     type="button"
                     variant="ghost"
@@ -145,11 +145,11 @@ export function Chatbot({ className }: { className?: string }) {
                 >
                     <Paperclip className="h-5 w-5" />
                 </Button>
-                <input
+                <Input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your message..."
-                    className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex-1"
                 />
                 <Button type="submit" disabled={isLoading || !input.trim()}>
                     {isLoading ? (
