@@ -1,34 +1,48 @@
 'use client';
 
-import SplashCursor from '@/blocks/Animations/SplashCursor/SplashCursor'
+import Link from 'next/link';
 import { ChatWidget } from '@/components/ChatWidget';
+import SplashCursor from '@/blocks/Animations/SplashCursor/SplashCursor';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-8 flex flex-col items-center justify-center">
-      <div className="max-w-2xl mx-auto space-y-8">
-        <h1 className="text-4xl font-bold">Embeddable AI Chatbot</h1>
-        <p className="text-lg text-muted-foreground">
-          This is a demo of our embeddable AI chatbot powered by Gemini. Click the chat
-          button in the bottom right corner to start a conversation.
-        </p>
-        <div className="p-4 bg-muted rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">How to Embed</h2>
-          <p className="mb-4">
-            To embed this chatbot in your website, add the following code to your page:
-          </p>
-          <pre className="bg-background p-4 rounded-md overflow-x-auto">
-            <code>{`<iframe 
-  src="https://embeddable-bot.vercel.app/widget"
-  width="100%"
-  height="600px"
-  frameBorder="0"
-/>`}</code>
-          </pre>
+    <main className="min-h-screen p-8">
+      <div className="max-w-6xl mx-auto h-[calc(100vh-4rem)] flex items-center">
+        <div className="grid grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h1 className="text-6xl font-bold">
+              Your AI Assistant,<br />
+              Always Ready to Help
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Enhance your website with our intelligent chatbot. Easy to integrate, powerful to use.
+            </p>
+            <div className="flex gap-4">
+              <Link
+                href="/how-to"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium"
+              >
+                Get Started
+              </Link>
+              <Link
+                href="/learn-more"
+                className="border border-input hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-lg font-medium"
+              >
+                Learn More
+              </Link>
+            </div>
+          </div>
+          <div className="relative h-[600px] flex items-center justify-center">
+            <DotLottieReact
+              src="https://lottie.host/460d0266-afc1-49a8-8bea-6b80c0bdc94f/xLh5yMM87Q.lottie"
+              loop
+              autoplay
+            />
+          </div>
         </div>
       </div>
       <ChatWidget />
-
       <SplashCursor />
     </main>
   );
