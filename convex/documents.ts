@@ -269,7 +269,7 @@ export const queryDocuments = action({
 
             // Initialize Gemini
             const genAI = initGemini(args.geminiApiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
             // Prepare prompt based on whether we have context
             let prompt = args.context ?
