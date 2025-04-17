@@ -2,7 +2,7 @@ import { v } from "convex/values";
 import { mutation, action, query } from "./_generated/server";
 import { Doc, Id } from "./_generated/dataModel";
 import { Pinecone } from "@pinecone-database/pinecone";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { api } from "./_generated/api";
 
 // Define types for our documents
@@ -269,7 +269,33 @@ export const queryDocuments = action({
 
             // Initialize Gemini
             const genAI = initGemini(args.geminiApiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+            const model = genAI.getGenerativeModel({ 
+                model: "gemini-1.5-pro-latest",
+                safetySettings: [
+                    {
+                        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                        threshold: HarmBlockThreshold.BLOCK_NONE
+                    },
+                    {
+                        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                        threshold: HarmBlockThreshold.BLOCK_NONE
+                    },
+                    {
+                        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                        threshold: HarmBlockThreshold.BLOCK_NONE
+                    },
+                    {
+                        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                        threshold: HarmBlockThreshold.BLOCK_NONE
+                    }
+                ],
+                generationConfig: {
+                    temperature: 0.7,
+                    topP: 0.95,
+                    topK: 64,
+                    maxOutputTokens: 2048,
+                }
+            });
 
             // Prepare prompt based on whether we have context
             let prompt = args.context ?
@@ -314,7 +340,19 @@ Important formatting instructions:
             return { text };
         } catch (error) {
             console.error("Error in queryDocuments:", error);
-            throw new Error("Failed to get response from AI");
+            // Provide more specific error messages based on the error type
+            if (error instanceof Error) {
+                if (error.message.includes("API key")) {
+                    throw new Error("Invalid Gemini API key. Please check your API key in .env.local");
+                } else if (error.message.includes("quota")) {
+                    throw new Error("Gemini API quota exceeded. Please try again later or use a different API key");
+                } else if (error.message.includes("model")) {
+                    throw new Error("Gemini model not found or unavailable. Please check that your API key has access to 'gemini-1.5-pro-latest'");
+                } else {
+                    throw new Error(`Failed to get response from AI: ${error.message}`);
+                }
+            }
+            throw new Error("Failed to get response from AI. Please check your API configuration and try again.");
         }
     }
 });
