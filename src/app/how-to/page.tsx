@@ -18,7 +18,7 @@ export default function HowTo() {
           </p>
           <pre className="bg-background p-4 rounded-md overflow-x-auto">
             <code>{`<iframe 
-  src="https://embeddable-bot.vercel.app/widget"
+  src="https://popbot.vercel.app/widget"
   width="100%"
   height="600px"
   frameBorder="0"
