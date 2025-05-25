@@ -270,7 +270,7 @@ export const queryDocuments = action({
             // Initialize Gemini
             const genAI = initGemini(args.geminiApiKey);
             const model = genAI.getGenerativeModel({ 
-                model: "gemini-1.5-pro-latest",
+                model: "gemini-2.0-flash",
                 safetySettings: [
                     {
                         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -290,10 +290,10 @@ export const queryDocuments = action({
                     }
                 ],
                 generationConfig: {
-                    temperature: 0.7,
-                    topP: 0.95,
-                    topK: 64,
-                    maxOutputTokens: 2048,
+                    temperature: 0.5,
+                    topP: 0.8,
+                    topK: 32,
+                    maxOutputTokens: 1024,
                 }
             });
 
@@ -347,7 +347,7 @@ Important formatting instructions:
                 } else if (error.message.includes("quota")) {
                     throw new Error("Gemini API quota exceeded. Please try again later or use a different API key");
                 } else if (error.message.includes("model")) {
-                    throw new Error("Gemini model not found or unavailable. Please check that your API key has access to 'gemini-1.5-pro-latest'");
+                    throw new Error("Gemini model not found or unavailable. Please check that your API key has access to 'gemini-2.0-flash'");
                 } else {
                     throw new Error(`Failed to get response from AI: ${error.message}`);
                 }
